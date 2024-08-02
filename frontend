@@ -1,0 +1,408 @@
+. Set Up the React Application
+Create a React Application
+Open your terminal and run the following command to create a new React app:
+
+sh
+Copy code
+npx create-react-app bfhl-frontend
+cd bfhl-frontend
+Install Dependencies
+For the dropdown and multiselect, you can use react-select.
+
+sh
+Copy code
+npm install react-select
+2. Implement the Components
+App Component (src/App.js)
+Replace the contents of App.js with the following code:
+
+jsx
+Copy code
+import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
+import './App.css';
+
+const App = () => {
+  const [jsonInput, setJsonInput] = useState('');
+  const [data, setData] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleJsonChange = (e) => {
+    setJsonInput(e.target.value);
+  };
+
+  const validateJson = (jsonString) => {
+    try {
+      JSON.parse(jsonString);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!validateJson(jsonInput)) {
+      alert('Invalid JSON input');
+      return;
+    }
+
+    try {
+      const response = await fetch('https://<your-heroku-app-name>.herokuapp.com/bfhl', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonInput
+      });
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const options = [
+    { value: 'alphabets', label: 'Alphabets' },
+    { value: 'numbers', label: 'Numbers' },
+    { value: 'highest_alphabet', label: 'Highest Alphabet' }
+  ];
+
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedOptions(selectedOptions);
+  };
+
+  const renderData = () => {
+    if (!data) return null;
+
+    return (
+      <div>
+        {selectedOptions.some(option => option.value === 'numbers') && (
+          <div>
+            <h3>Numbers</h3>
+            <p>{data.numbers.join(', ')}</p>
+          </div>
+        )}
+        {selectedOptions.some(option => option.value === 'alphabets') && (
+          <div>
+            <h3>Alphabets</h3>
+            <p>{data.alphabets.join(', ')}</p>
+          </div>
+        )}
+        {selectedOptions.some(option => option.value === 'highest_alphabet') && (
+          <div>
+            <h3>Highest Alphabet</h3>
+            <p>{data.highest_alphabet.join(', ')}</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    document.title = 'SRM2021IT123';
+  }, []);
+
+  return (
+    <div className="App">
+      <h1>SRM2021IT123</h1>
+      <textarea
+        value={jsonInput}
+        onChange={handleJsonChange}
+        placeholder='Enter JSON here'
+        rows="10"
+        cols="50"
+      />
+      <br />
+      <button onClick={handleSubmit}>Submit</button>
+      <br />
+      {data && (
+        <Select
+          isMulti
+          options={options}
+          onChange={handleSelectChange}
+        />
+      )}
+      {renderData()}
+    </div>
+  );
+};
+
+export default App;
+3. Add Styling
+Create a simple CSS file to style the application.
+
+src/App.css
+css
+Copy code
+.App {
+  text-align: center;
+}
+
+textarea {
+  width: 80%;
+  margin: 20px 0;
+}
+
+button {
+  margin: 20px 0;
+}
+
+h3 {
+  margin-top: 20px;
+}
+4. Deploy the React Application
+Build the React App
+Run the following command to build the React application:
+
+sh
+Copy code
+npm run build
+Deploy to a Hosting Service
+You can use Netlify, Vercel, or any other preferred hosting service to deploy your React app.
+
+Netlify Deployment
+Sign Up at Netlify:
+
+Go to Netlify and sign up.
+Create a New Site:
+
+Click on "New site from Git".
+Link Your GitHub Repository:
+
+Authorize Netlify to access your GitHub account and select the repository you want to deploy.
+Deploy the Site:
+
+Follow the prompts to deploy your site.
+Vercel Deployment
+Sign Up at Vercel:
+
+Go to Vercel and sign up.
+Create a New Project:
+
+Click on "New Project" and import your GitHub repository.
+Deploy the Project:
+
+Follow the prompts to deploy your project.
+5. Submit the URLs
+After deploying both your backend and frontend, submit the URLs in the provided form: Form Link.
+
+Final Checklist
+Ensure your backend is correctly handling POST requests and returning the expected JSON response.
+Validate JSON input in your React app before submitting to the backend.
+Properly render the response data based on the user's dropdown selections.
+Set the document title to your roll number.
+Feel free to ask if you have any further questions or need additional assistance!
+
+PS C:\Users\Kavisha> cd bfhl-frontend
+cd : Cannot find path 'C:\Users\Kavisha\bfhl-frontend' because
+it does not exist.
+At line:1 char:1
++ cd bfhl-frontend
++ ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\Kavish
+   a\bfhl-frontend:String) [Set-Location], ItemNotFoundExcept
+  ion
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShel
+   l.Commands.SetLocationCommand
+ChatGPT
+It looks like the bfhl-frontend directory hasn't been created yet. Let's create the React app from the beginning. Follow these steps to ensure everything is set up correctly:
+
+1. Open a Terminal or Command Prompt
+Open your terminal or command prompt and navigate to the directory where you want to create your React application. For example:
+
+sh
+Copy code
+cd C:\Users\Kavisha
+2. Create a New React App
+Run the following command to create a new React application called bfhl-frontend:
+
+sh
+Copy code
+npx create-react-app bfhl-frontend
+This will create a new directory called bfhl-frontend with all the necessary files for a React application.
+
+3. Navigate to the New Directory
+Once the React app is created, navigate to the bfhl-frontend directory:
+
+sh
+Copy code
+cd bfhl-frontend
+4. Install Additional Dependencies
+Install react-select for the dropdown and multiselect functionality:
+
+sh
+Copy code
+npm install react-select
+5. Replace App.js Content
+Open the bfhl-frontend directory in your favorite code editor (e.g., Visual Studio Code) and replace the contents of src/App.js with the following code:
+
+jsx
+Copy code
+import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
+import './App.css';
+
+const App = () => {
+  const [jsonInput, setJsonInput] = useState('');
+  const [data, setData] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleJsonChange = (e) => {
+    setJsonInput(e.target.value);
+  };
+
+  const validateJson = (jsonString) => {
+    try {
+      JSON.parse(jsonString);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!validateJson(jsonInput)) {
+      alert('Invalid JSON input');
+      return;
+    }
+
+    try {
+      const response = await fetch('https://<your-heroku-app-name>.herokuapp.com/bfhl', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonInput
+      });
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const options = [
+    { value: 'alphabets', label: 'Alphabets' },
+    { value: 'numbers', label: 'Numbers' },
+    { value: 'highest_alphabet', label: 'Highest Alphabet' }
+  ];
+
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedOptions(selectedOptions);
+  };
+
+  const renderData = () => {
+    if (!data) return null;
+
+    return (
+      <div>
+        {selectedOptions.some(option => option.value === 'numbers') && (
+          <div>
+            <h3>Numbers</h3>
+            <p>{data.numbers.join(', ')}</p>
+          </div>
+        )}
+        {selectedOptions.some(option => option.value === 'alphabets') && (
+          <div>
+            <h3>Alphabets</h3>
+            <p>{data.alphabets.join(', ')}</p>
+          </div>
+        )}
+        {selectedOptions.some(option => option.value === 'highest_alphabet') && (
+          <div>
+            <h3>Highest Alphabet</h3>
+            <p>{data.highest_alphabet.join(', ')}</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    document.title = 'SRM2021IT123';
+  }, []);
+
+  return (
+    <div className="App">
+      <h1>SRM2021IT123</h1>
+      <textarea
+        value={jsonInput}
+        onChange={handleJsonChange}
+        placeholder='Enter JSON here'
+        rows="10"
+        cols="50"
+      />
+      <br />
+      <button onClick={handleSubmit}>Submit</button>
+      <br />
+      {data && (
+        <Select
+          isMulti
+          options={options}
+          onChange={handleSelectChange}
+        />
+      )}
+      {renderData()}
+    </div>
+  );
+};
+
+export default App;
+6. Add Styling
+Create a simple CSS file to style the application.
+
+src/App.css
+Create or replace src/App.css with the following content:
+
+css
+Copy code
+.App {
+  text-align: center;
+}
+
+textarea {
+  width: 80%;
+  margin: 20px 0;
+}
+
+button {
+  margin: 20px 0;
+}
+
+h3 {
+  margin-top: 20px;
+}
+7. Run the React Application
+Start the React development server:
+
+sh
+Copy code
+npm start
+This will run your application on http://localhost:3000. You should see the input form where you can enter JSON data, submit it, and see the results based on your selection.
+
+8. Deploy the React Application
+After verifying that everything works locally, you can deploy the application using Netlify, Vercel, or another hosting service.
+
+Deploy to Netlify
+Sign Up at Netlify:
+
+Go to Netlify and sign up.
+Create a New Site:
+
+Click on "New site from Git".
+Link Your GitHub Repository:
+
+Authorize Netlify to access your GitHub account and select the repository you want to deploy.
+Deploy the Site:
+
+Follow the prompts to deploy your site.
+Deploy to Vercel
+Sign Up at Vercel:
+
+Go to Vercel and sign up.
+Create a New Project:
+
+Click on "New Project" and import your GitHub repository.
+Deploy the Project:
+
+Follow the prompts to deploy your project.
